@@ -1,6 +1,6 @@
 <?php
 use NNV\RestCountries;
-
+use FFI\Exception;
 require_once __DIR__ .'/vendor/autoload.php';
 require __DIR__ .'/paises.php';
 require __DIR__ .'/continentes.php';

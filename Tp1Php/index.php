@@ -4,37 +4,50 @@
  
  $caso = '';
 
-  if( isset($_GET['caso']) )
-     $caso = $_GET['caso'];  
-  if( isset($_GET['dato']) )
-     $dato = $_GET['dato'];
+  
+     $caso = $_GET['caso'] ?? "0";  
 
+     $dato = $_GET['dato'] ?? "0";
+
+ $respuesta = new stdClass;
+
+ $respuesta->respuesta = false;
+ 
  switch( $caso ){
+
      case 'cargarPaisesDelMundo':
+        
        echo Funciones::MostrarPaisesDelMundo();
          break;
      case 'cargarPaisesPorContinente':
-         if(isset($_GET['dato']) && $dato != "" )
+       
+         if($dato!= "0" && $dato != "" )
          {  
              try
-             { 
-                echo Funciones::PaisesPorContinente($dato);
+             {  
                
+                echo Funciones::PaisesPorContinente($dato);
+              
               
              }catch(Exception $e)
-             {
-                echo "Ingrese un contienente valido";
+             {   
+                 $respuesta->data= "Ingrese un contienente valido";
+                
+                 echo json_encode($respuesta);
             
              }
          }
          else
-         {
-             echo "Ingrese el nombre del contienente";
+         {   
+            $respuesta->data= "Ingrese el nombre del contienente";
+                
+            echo json_encode($respuesta);
+            
          }
          break;
 
      case 'cargarPaisPorSubRegion':
-        if(isset($_GET['dato']) && $dato != "" )
+        if($dato!= "0" && $dato != "" )
         {  
             try
             { 
@@ -42,18 +55,24 @@
                 echo Funciones::PaisesPorSubRegion($dato);
              
             }catch(Exception $e)
-            {
-               echo "Ingrese una Subregion valida";
-           
+            {   
+               
+                $respuesta->data= "Ingrese una Subregion valida";
+                
+                echo json_encode($respuesta);
+              
             }
         }
         else
-        {
-            echo "Ingrese el nombre de la Subregion";
+        {   
+            $respuesta->data= "Ingrese el nombre de la Subregion";
+                
+             echo json_encode($respuesta);
+            
         }
          break;
      case 'cargarPaisesPorCiudad':
-        if(isset($_GET['dato']) && $dato != "" )
+        if($dato!= "0" && $dato != "" )
         { 
             try
             { 
@@ -61,37 +80,53 @@
               
              
             }catch(Exception $e)
-            {
-               echo "Ingrese una ciudad valida";
+            {  
+                $respuesta->data= "Ingrese una ciudad valida";
+                
+                echo json_encode($respuesta);
+              
            
             }
         }
         else
-        {
-            echo "Ingrese una ciudad";
+        { 
+            $respuesta->data= "Ingrese una ciudad";
+                
+            echo json_encode($respuesta);
+          
         }
          break;
      case 'cargarPaisPorLenguaje':
 
-        if(isset($_GET['dato']) && $dato != "" )
+        if($dato!= "0" && $dato != "" )
         { 
 
          try{
 
             echo Funciones::LenguagePaises($dato);
           }catch(Exception $e){
-              echo "Ingrese un lenguaje valido";
+            
+            $respuesta->data= "Ingrese un lenguaje valido";
+                
+            echo json_encode($respuesta);
+             
           }
           
         }
         else
-        {
-            echo "Ingrese un lenguaje";
+        {   
+            $respuesta->data= "Ingrese un lenguaje";
+                
+            echo json_encode($respuesta);
+           
         }
          break;
      default:
-      
-         echo 'Debe ingresar un caso valido';
+
+        $respuesta->data= 'Debe ingresar un caso valido';
+                
+        echo json_encode($respuesta);
+        
         break;
 
  }
